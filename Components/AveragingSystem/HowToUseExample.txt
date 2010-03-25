@@ -1,0 +1,41 @@
+Imports utac
+
+Module Module1
+
+    'This is the averaging system engine object
+    Dim myEngine As New utac.Components.AveragingSystem.TempHumAvgEngine
+
+    Dim WithEvents myTimer As New System.Timers.Timer(2000)
+
+    Sub Main()
+
+        myTimer.Enabled = True
+
+        Dim temp As Double
+        Dim humidity As Double
+
+        For index As Integer = 1 To 5000
+            temp = CInt(Int((100 - 1 + 1) * Rnd() + 1))
+            humidity = temp + 1
+
+	    'Let's add a value - that's supposed to be done every 5 seconds here
+            myEngine.AddValue(temp, humidity)
+
+            Threading.Thread.Sleep(100)
+        Next
+
+    End Sub
+
+
+    Private Sub myTimer_Elapsed(ByVal sender As Object, ByVal e As System.Timers.ElapsedEventArgs) Handles myTimer.Elapsed
+
+        Dim avg As utac.Components.AveragingSystem.TempHumiditySet
+
+	'Gets the average for the last 5 entries (5 minutes)
+        avg = myEngine.GetAverages(5)
+
+        Console.WriteLine(avg.TempC.ToString & " " & avg.Humidity.ToString)
+
+    End Sub
+
+End Module

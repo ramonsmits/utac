@@ -1,0 +1,269 @@
+public void TempNTCr()
+{
+    Control.CheckForIllegalCrossThreadCalls = false;
+    failedFlag = false;
+    if (Convert.ToDouble(volt1) < 0.25)
+    {
+        WriteED(0, "10001111");
+        LabPGA.Text = "PGA=8 ";
+        volt1 = new decimal((ReadED(0) * 6.25E-05) / 8.0);
+    }
+    else if (Convert.ToDouble(volt1) < 0.05)
+    {
+        WriteED(0, "10001110");
+        volt1 = new decimal((ReadED(0) * 6.25E-05) / 4.0);
+        LabPGA.Text = "PGA=4 ";
+    }
+    else if (decimal.Compare(volt1, decimal.One) < 0)
+    {
+        WriteED(0, "10001101");
+        volt1 = new decimal((ReadED(0) * 6.25E-05) / 2.0);
+        LabPGA.Text = "PGA=2 ";
+    }
+    Temp_NTC = Convert.ToDouble(decimal.Divide(volt1, I1));
+    NTCdata = Conversions.ToDecimal(Strings.Format(Temp_NTC, "0.0000"));
+}
+
+
+public void WriteED(byte cs, string sdata)
+{
+    byte tt;
+    int delcnt;
+
+    if (!m_SerialPort.IsOpen)
+    {
+	m_SerialPort.Open();
+    }
+    if (!m_SerialPort.IsOpen)
+    {
+        log("Error Opening Serial Port in WriteED.");
+	return myMinValue;
+    }
+
+    Start_IIC();
+    SDout(1);
+    HiLowSCLK();
+    SDout(0);
+    HiLowSCLK();
+    SDout(0);
+    HiLowSCLK();
+    SDout(1);
+    HiLowSCLK();
+
+    if ( (cs/4)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+    if ( (cs/2)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+    if ( (cs/1)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+
+    SDout(0);
+    HiLowSCLK();
+    int timeOut = 0;
+    timeOut = 0;
+    do
+    {
+        Delay(10);
+        tt = SDin();
+        if (tt == 0)
+        {
+            break;
+        }
+        timeOut++;
+    }
+    while (timeOut <= 100 );
+
+    if ((timeOut >= 100) & (tt == 1))
+        log ( "WriteED Timeout.");
+
+    HiLowSCLK();
+    if (tt == 1)
+    {
+        if (CHic == "T")
+        {
+            CHic = "R";
+        }
+        else
+        {
+            CHic = "T";
+        }
+    }
+    if (tt == 1)
+    {
+        failedFlag = true;
+        log( "WriteED ACK Error");
+        if (m_SerialPort.IsOpen)
+	   m_SerialPort.Close();
+    }
+    else
+    {
+        byte delcnt;
+        byte xx = 1;
+        do
+        {
+            if (Conversions.ToByte(Strings.Mid(sdata, xx, 1)) == Conversions.ToDouble("1"))
+            {
+                SDout(1);
+            }
+            else
+            {
+                SDout(0);
+            }
+            HiLowSCLK();
+            xx = (byte) (xx + 1);
+            delcnt = 8;
+        }
+        while (xx <= delcnt);
+        tt = SDin();
+        HiLowSCLK();
+        if (tt == 1)
+        {
+            if (CHic == "T")
+            {
+                CHic = "R";
+            }
+            else
+            {
+                CHic = "T";
+            }
+        }
+        xx = 1;
+        do
+        {
+            if (Conversions.ToByte(Strings.Mid(sdata, xx, 1)) == Conversions.ToDouble("1"))
+            {
+                SDout(1);
+            }
+            else
+            {
+                SDout(0);
+            }
+            HiLowSCLK();
+            xx = (byte) (xx + 1);
+            delcnt = 8;
+        }
+        while (xx <= delcnt);
+        Stop_IIC();
+        if (m_SerialPort.IsOpen)
+	   m_SerialPort.Close();
+    }
+}
+
+public double ReadED(byte cs)
+{
+    byte tt;
+    int delcnt;
+
+    if (!m_SerialPort.IsOpen)
+    {
+	m_SerialPort.Open();
+    }
+    if (!m_SerialPort.IsOpen)
+    {
+        log("Error Opening Serial Port in ReadED.");
+	return myMinValue;
+    }
+
+
+    Start_IIC();
+    SDout(1);
+    HiLowSCLK();
+    SDout(0);
+    HiLowSCLK();
+    SDout(0);
+    HiLowSCLK();
+    SDout(1);
+    HiLowSCLK();
+
+    if ( (cs/4)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+    if ( (cs/2)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+    if ( (cs/1)%2 ) SDout(1) else SDout(0);
+    HiLowSCLK();
+
+    SDout(1);
+    HiLowSCLK();
+    int timeOut = 0;
+    timeOut = 0;
+    do
+    {
+        Delay(10);
+        tt = SDin();
+        if (tt == 0)
+        {
+            break;
+        }
+        timeOut++;
+        delcnt = 100;
+    }
+    while (timeOut <= delcnt);
+    if (timeOut >= 100)
+    {
+        log( "ReadED timeOut");
+    }
+
+    HiLowSCLK();
+    switch (tt)
+    {
+        case 1:
+            log( "readED ACK err1" );
+            break;
+
+        case 0:
+        {
+            string str_data = Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            HiLowSCLK();
+            str_data = str_data + Conversions.ToString(SDin());
+            Stop_IIC();
+
+	    if (m_SerialPort.IsOpen)
+	         m_SerialPort.Close();
+
+            string fig = Strings.Left(str_data, 1);
+            string str_msb = Strings.Mid(str_data, 2, 7);
+            string str_lsb = Strings.Right(str_data, 8);
+            double msb = Bin2Dec(str_msb);
+            double lsb = Bin2Dec(str_lsb);
+            double tempdata = (msb * 256.0) + lsb;
+            if (Conversions.ToDouble(fig) == 0.0)
+            {
+                return tempdata;
+            }
+            return (tempdata - 32768.0);
+        }
+    }
+    return myMinValue;
+}
+
+ 
