@@ -85,22 +85,11 @@ namespace utac
         {
             InitializeComponent();
 
-            OpenCloseBox mybox = new OpenCloseBox();
-
-            mybox.SetBounds((Screen.GetBounds(mybox).Width / 2) - (mybox.Width / 2), (Screen.GetBounds(mybox).Height / 2) - (mybox.Height / 2), mybox.Width, mybox.Height, BoundsSpecified.Location);
-
-
-            mybox.Show();
-            mybox.Refresh();
-
             progStart();
 
             generateGraph(0);
 
-            mybox.Dispose();
-
             startThread();
-
         }
 
         //  This apparently runs each timer tick - basically does an update.
@@ -1274,18 +1263,6 @@ namespace utac
 
         public void progEnd()
         {
-
-            OpenCloseBox mybox = new OpenCloseBox();
-
-            mybox.label2.Text = "Closing...";
-            mybox.Text = "UTAC Closing...";
-
-            mybox.SetBounds((Screen.GetBounds(mybox).Width / 2) - (mybox.Width / 2), (Screen.GetBounds(mybox).Height / 2) - (mybox.Height / 2), mybox.Width, mybox.Height, BoundsSpecified.Location);
-
-
-            mybox.Show();
-            mybox.Refresh();
-
             Alert.Hide();
 
             try
@@ -1304,9 +1281,6 @@ namespace utac
 
             Config myconfig = new Config();
             myconfig.SaveConfig();
-
-            mybox.Dispose();
-
         }
 
         void MainFormFormClosed(object sender, FormClosedEventArgs e)
