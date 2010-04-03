@@ -46,7 +46,7 @@ namespace utac.Components.Settings
     {
         //  Had to add path to settings to get the settings file to load properly when
         //  program is autoloaded on reboot.
-        readonly string defaultconfigFilename = Application.StartupPath+"\\utacsettings.xml";
+        readonly string defaultconfigFilename = Application.StartupPath + "\\utacsettings.xml";
 
         /// <summary>
         /// Add/Remove registry entries for windows startup.
@@ -89,19 +89,19 @@ namespace utac.Components.Settings
             mysettings.WriteInt("main", "timercount", GlobalVars.config_timercount);
             mysettings.WriteBool("main", "list", GlobalVars.config_list);
             mysettings.WriteInt("main", "listitems", GlobalVars.config_listitems);
-           
+
             //Graph
             mysettings.WriteBool("main", "graph", GlobalVars.config_graph);
-			mysettings.WriteBool("main", "graph_auto", GlobalVars.config_graph_auto);
-			mysettings.WriteDouble("main", "graph_max", GlobalVars.config_graph_max);
-			mysettings.WriteDouble("main", "graph_min", GlobalVars.config_graph_min);
+            mysettings.WriteBool("main", "graph_auto", GlobalVars.config_graph_auto);
+            mysettings.WriteDouble("main", "graph_max", GlobalVars.config_graph_max);
+            mysettings.WriteDouble("main", "graph_min", GlobalVars.config_graph_min);
 
             mysettings.WriteString("main", "devicename1", GlobalVars.config_devicename1);
             mysettings.WriteString("main", "devicename2", GlobalVars.config_devicename2);
             mysettings.WriteString("main", "devicename3", GlobalVars.config_devicename3);
             mysettings.WriteString("main", "devicename4", GlobalVars.config_devicename4);
 
-            
+
             //File Recording
             mysettings.WriteBool("main", "recordtofile", GlobalVars.config_recordtofile);
             mysettings.WriteBool("main", "dailyfiles", GlobalVars.config_dailyfiles);
@@ -117,7 +117,7 @@ namespace utac.Components.Settings
             mysettings.WriteString("main", "ftpuploaddir", GlobalVars.config_ftpuploaddir);
             mysettings.WriteBool("main", "ftpactive", GlobalVars.config_ftpactive);
             mysettings.WriteBool("main", "ftpuploadgraph", GlobalVars.config_ftpuploadgraph);
-           
+
             //WEB URL Grabber
             mysettings.WriteString("main", "url", GlobalVars.config_url);
             mysettings.WriteString("main", "wugid", GlobalVars.wugid);
@@ -132,7 +132,7 @@ namespace utac.Components.Settings
             mysettings.WriteBool("main", "temperautodetect", GlobalVars.config_temperautodetect);
 
             mysettings.WriteDouble("main", "calibrationtemp", GlobalVars.config_calibration_temp);
-			mysettings.WriteDouble("main", "calibrationhum", GlobalVars.config_calibration_humidity);
+            mysettings.WriteDouble("main", "calibrationhum", GlobalVars.config_calibration_humidity);
 
             mysettings.WriteDouble("main", "tempcalo1", GlobalVars.config_tempcalo1);
             mysettings.WriteDouble("main", "tempcalo2", GlobalVars.config_tempcalo2);
@@ -155,15 +155,15 @@ namespace utac.Components.Settings
             mysettings.WriteDouble("main", "humcals3", GlobalVars.config_humcals3);
             mysettings.WriteDouble("main", "humcals4", GlobalVars.config_humcals4);
 
-			//E-MAIL
-			mysettings.WriteString("main", "mail_server", GlobalVars.config_mail_server);
-			mysettings.WriteString("main", "mail_server_port", GlobalVars.config_mail_server_port);
-			mysettings.WriteString("main", "mail_user", GlobalVars.config_mail_user);
-			mysettings.WriteString("main", "mail_to", GlobalVars.config_mail_to);
-			mysettings.WriteString("main", "mail_user", GlobalVars.config_mail_user);
-			mysettings.WriteString("main", "mail_password", GlobalVars.config_mail_password);
+            //E-MAIL
+            mysettings.WriteString("main", "mail_server", GlobalVars.config_mail_server);
+            mysettings.WriteString("main", "mail_server_port", GlobalVars.config_mail_server_port);
+            mysettings.WriteString("main", "mail_user", GlobalVars.config_mail_user);
+            mysettings.WriteString("main", "mail_to", GlobalVars.config_mail_to);
+            mysettings.WriteString("main", "mail_user", GlobalVars.config_mail_user);
+            mysettings.WriteString("main", "mail_password", GlobalVars.config_mail_password);
             mysettings.WriteString("main", "mail_from", GlobalVars.config_mail_from);
-			
+
             //Built in Webserver
             mysettings.WriteBool("main", "BIWActivated", GlobalVars.config_BIWActivated);
             mysettings.WriteInt("main", "BIWPort", GlobalVars.config_BIWPort);
@@ -198,12 +198,12 @@ namespace utac.Components.Settings
             //General
             mysettings.WriteBool("main", "autostart", GlobalVars.config_autostart);
             mysettings.WriteBool("main", "startminimized", GlobalVars.config_startminimized);
-            
+
             //Alert System
-			mysettings.WriteDouble("main", "alert_tempmax1", GlobalVars.config_alert_tempmax1);
-			mysettings.WriteDouble("main", "alert_tempmin1", GlobalVars.config_alert_tempmin1);
-			mysettings.WriteDouble("main", "alert_hummax1", GlobalVars.config_alert_hummax1);
-			mysettings.WriteDouble("main", "alert_hummin1", GlobalVars.config_alert_hummin1);
+            mysettings.WriteDouble("main", "alert_tempmax1", GlobalVars.config_alert_tempmax1);
+            mysettings.WriteDouble("main", "alert_tempmin1", GlobalVars.config_alert_tempmin1);
+            mysettings.WriteDouble("main", "alert_hummax1", GlobalVars.config_alert_hummax1);
+            mysettings.WriteDouble("main", "alert_hummin1", GlobalVars.config_alert_hummin1);
             mysettings.WriteBool("main", "alert_humemail1", GlobalVars.config_alert_humemail1);
             mysettings.WriteBool("main", "alert_humonscreen1", GlobalVars.config_alert_humonscreen1);
             mysettings.WriteBool("main", "alert_tempemail1", GlobalVars.config_alert_tempemail1);
@@ -254,12 +254,12 @@ namespace utac.Components.Settings
             GlobalVars.config_timercount = mysettings.ReadInt("main", "timercount", 60);
             GlobalVars.config_list = mysettings.ReadBool("main", "list", false);
             GlobalVars.config_listitems = mysettings.ReadInt("main", "listitems", 100);
-            
+
             //Graph
             GlobalVars.config_graph = mysettings.ReadBool("main", "graph", false);
             GlobalVars.config_graph_auto = mysettings.ReadBool("main", "graph_auto", true);
-			GlobalVars.config_graph_max = mysettings.ReadDouble("main", "graph_max", 0);
-			GlobalVars.config_graph_min = mysettings.ReadDouble("main", "graph_min", 0);
+            GlobalVars.config_graph_max = mysettings.ReadDouble("main", "graph_max", 0);
+            GlobalVars.config_graph_min = mysettings.ReadDouble("main", "graph_min", 0);
 
             GlobalVars.config_devicename1 = mysettings.ReadString("main", "devicename1", "");
             GlobalVars.config_devicename2 = mysettings.ReadString("main", "devicename2", "");
@@ -281,18 +281,18 @@ namespace utac.Components.Settings
             GlobalVars.config_ftppass = mysettings.ReadString("main", "ftppass", "");
             GlobalVars.config_ftpuploaddir = mysettings.ReadString("main", "ftpuploaddir", "");
             GlobalVars.config_ftpactive = mysettings.ReadBool("main", "ftpactive", false);
-			GlobalVars.config_ftpuploadgraph = mysettings.ReadBool("main", "ftpuploadgraph", false);
+            GlobalVars.config_ftpuploadgraph = mysettings.ReadBool("main", "ftpuploadgraph", false);
 
-			//E-MAIL
-			GlobalVars.config_mail_server = mysettings.ReadString("main", "mail_server", "");
-			GlobalVars.config_mail_server_port = mysettings.ReadString("main", "mail_server_port", "25");
-			GlobalVars.config_mail_user = mysettings.ReadString("main", "mail_user", "");
-			GlobalVars.config_mail_to = mysettings.ReadString("main", "mail_to", "");
-			GlobalVars.config_mail_user = mysettings.ReadString("main", "mail_user", "");
-			GlobalVars.config_mail_password = mysettings.ReadString("main", "mail_password", "");
-			GlobalVars.config_mail_from = mysettings.ReadString("main", "mail_from", "");
-			
-            
+            //E-MAIL
+            GlobalVars.config_mail_server = mysettings.ReadString("main", "mail_server", "");
+            GlobalVars.config_mail_server_port = mysettings.ReadString("main", "mail_server_port", "25");
+            GlobalVars.config_mail_user = mysettings.ReadString("main", "mail_user", "");
+            GlobalVars.config_mail_to = mysettings.ReadString("main", "mail_to", "");
+            GlobalVars.config_mail_user = mysettings.ReadString("main", "mail_user", "");
+            GlobalVars.config_mail_password = mysettings.ReadString("main", "mail_password", "");
+            GlobalVars.config_mail_from = mysettings.ReadString("main", "mail_from", "");
+
+
             //WEB URL Grabber
             GlobalVars.config_url = mysettings.ReadString("main", "url", "");
             GlobalVars.wugid = mysettings.ReadString("main", "wugid", "");
@@ -307,7 +307,7 @@ namespace utac.Components.Settings
             GlobalVars.config_temperautodetect = mysettings.ReadBool("main", "temperautodetect", true);
 
             GlobalVars.config_calibration_temp = mysettings.ReadDouble("main", "calibrationtemp", 0);
-			GlobalVars.config_calibration_humidity = mysettings.ReadDouble("main", "calibrationhum", 0);
+            GlobalVars.config_calibration_humidity = mysettings.ReadDouble("main", "calibrationhum", 0);
 
             GlobalVars.config_tempcalo1 = mysettings.ReadDouble("main", "tempcalo1", 0);
             GlobalVars.config_tempcalo2 = mysettings.ReadDouble("main", "tempcalo2", 0);
@@ -329,7 +329,7 @@ namespace utac.Components.Settings
             GlobalVars.config_humcals2 = mysettings.ReadDouble("main", "humcals2", 0);
             GlobalVars.config_humcals3 = mysettings.ReadDouble("main", "humcals3", 0);
             GlobalVars.config_humcals4 = mysettings.ReadDouble("main", "humcals4", 0);
-            
+
             //Built in Webserver
             GlobalVars.config_BIWActivated = mysettings.ReadBool("main", "BIWActivated", false);
             GlobalVars.config_BIWPort = mysettings.ReadInt("main", "BIWPort", 5050);
@@ -361,16 +361,16 @@ namespace utac.Components.Settings
 
             //General
             GlobalVars.config_autostart = mysettings.ReadBool("main", "autostart", false);
-            GlobalVars.config_startminimized = mysettings.ReadBool("main", "startminimized", false);           
-                        
+            GlobalVars.config_startminimized = mysettings.ReadBool("main", "startminimized", false);
+
             //Alert System
-			GlobalVars.config_alert_tempmax1 = mysettings.ReadDouble("main", "alert_tempmax1", 0);
-			GlobalVars.config_alert_tempmin1 = mysettings.ReadDouble("main", "alert_tempmin1", 0);
-			GlobalVars.config_alert_hummax1 = mysettings.ReadDouble("main", "alert_hummax1", 0);
-			GlobalVars.config_alert_hummin1 = mysettings.ReadDouble("main", "alert_hummin1", 0);
-            GlobalVars.config_alert_humemail1 =  mysettings.ReadBool("main", "alert_humemail1", false);
-            GlobalVars.config_alert_humonscreen1= mysettings.ReadBool("main", "alert_humonscreen1", false);
-            GlobalVars.config_alert_tempemail1 =  mysettings.ReadBool("main", "alert_tempemail1", false);
+            GlobalVars.config_alert_tempmax1 = mysettings.ReadDouble("main", "alert_tempmax1", 0);
+            GlobalVars.config_alert_tempmin1 = mysettings.ReadDouble("main", "alert_tempmin1", 0);
+            GlobalVars.config_alert_hummax1 = mysettings.ReadDouble("main", "alert_hummax1", 0);
+            GlobalVars.config_alert_hummin1 = mysettings.ReadDouble("main", "alert_hummin1", 0);
+            GlobalVars.config_alert_humemail1 = mysettings.ReadBool("main", "alert_humemail1", false);
+            GlobalVars.config_alert_humonscreen1 = mysettings.ReadBool("main", "alert_humonscreen1", false);
+            GlobalVars.config_alert_tempemail1 = mysettings.ReadBool("main", "alert_tempemail1", false);
             GlobalVars.config_alert_temponscreen1 = mysettings.ReadBool("main", "alert_temponscreen1", false);
 
             GlobalVars.config_alert_tempmax2 = mysettings.ReadDouble("main", "alert_tempmax2", 0);
@@ -401,8 +401,6 @@ namespace utac.Components.Settings
             GlobalVars.config_alert_humonscreen4 = mysettings.ReadBool("main", "alert_humonscreen4", false);
             GlobalVars.config_alert_tempemail4 = mysettings.ReadBool("main", "alert_tempemail4", false);
             GlobalVars.config_alert_temponscreen4 = mysettings.ReadBool("main", "alert_temponscreen4", false);
-
-            
         }
     }
 }

@@ -36,16 +36,15 @@
  * This public class contains the result from the GetAverage method
  */
 
-namespace utac.Components.AveragingSystem 
+namespace utac.Components.AveragingSystem
 {
     /// <summary>
     /// This class is used to get the average values (temp and humidity)
     /// </summary>
     public class TempHumiditySet
     {
-
         #region Attributes
-        
+
         private double _TempC;
         public double TempC
         {
@@ -61,8 +60,5 @@ namespace utac.Components.AveragingSystem
         }
 
         #endregion
-
-       
     }
-
 }

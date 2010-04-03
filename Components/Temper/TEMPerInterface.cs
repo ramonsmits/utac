@@ -48,15 +48,15 @@ using System.IO;
 
 namespace utac.Components.TEMPer
 {
-	public class TEMPerInterface
-	{
-		private readonly String m_PortName = null;
-		public SerialPort m_SerialPort = null;
+    public class TEMPerInterface
+    {
+        private readonly String m_PortName = null;
+        public SerialPort m_SerialPort = null;
         private readonly int m_HIDDev = -1;
-		private String m_CHic = null;
-		private bool m_Init = false;
-		private static readonly string LogFileName = "LOG-TEMPERINTERFACE.txt";
-		private static readonly double myMinValue = -99;
+        private String m_CHic = null;
+        private bool m_Init = false;
+        private static readonly string LogFileName = "LOG-TEMPERINTERFACE.txt";
+        private static readonly double myMinValue = -99;
 
         private decimal volt1 = 0;
         private String PGAGain = "1";
@@ -79,27 +79,30 @@ namespace utac.Components.TEMPer
         public string hmin_date = "";
 
         public bool hadBadReading = false;
-        
+
         public string DeviceName = "n/a";
 
-		#region Static Methods
+        #region Static Methods
 
-		public static double CtoF(double celsius)
-		{
-			return (9*celsius/5+32);
-		}
-		
-		
-		public static double getTempDouble(object temp){
-			double tmpDouble;
-			if(GlobalVars.config_fahrenheit){
-				tmpDouble = CtoF(Convert.ToDouble(temp));
-			}
-			else {
-				tmpDouble = Convert.ToDouble(temp);
-			}
-			return tmpDouble;
-		}
+        public static double CtoF(double celsius)
+        {
+            return (9 * celsius / 5 + 32);
+        }
+
+
+        public static double getTempDouble(object temp)
+        {
+            double tmpDouble;
+            if (GlobalVars.config_fahrenheit)
+            {
+                tmpDouble = CtoF(Convert.ToDouble(temp));
+            }
+            else
+            {
+                tmpDouble = Convert.ToDouble(temp);
+            }
+            return tmpDouble;
+        }
 
         // No Conversion, used in temperature min/max processing.
         public static double getTempDoubleNC(object temp)
@@ -115,123 +118,143 @@ namespace utac.Components.TEMPer
             humDouble = Convert.ToDouble(hum);
             return humDouble;
         }
-		
-		
-		
-		public static string getTempFullText(object temp){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(temp);
-			if (tmpDouble == -99) tmpString = "-";
-			else {	
-			if(GlobalVars.config_fahrenheit){
-				tmpDouble = CtoF(Convert.ToDouble(temp));
-				tmpString = tmpDouble.ToString("###0.0000")+" °F";
-			}
-			else {
-				tmpDouble = Convert.ToDouble(temp);
-				tmpString = tmpDouble.ToString("###0.0000")+" °C";
-			}
-			}
-			return tmpString;
-		}
-		
-		
-		public static string getTempFullTextHTML(object temp){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(temp);
-			if (tmpDouble == -99) tmpString = "-";
-			else {	
-			if(GlobalVars.config_fahrenheit){
-				tmpDouble = CtoF(Convert.ToDouble(temp));
-				tmpString = tmpDouble.ToString("###0.0000")+" &deg;F";
-			}
-			else {
-				tmpDouble = Convert.ToDouble(temp);
-				tmpString = tmpDouble.ToString("###0.0000")+" &deg;C";
-			}
-			}
-			return tmpString;
-		}
-		
-		
-		public static string getTempFullTextShortHTML(object temp){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(temp);
-			if (tmpDouble == -99) tmpString = "-";
-			else {	
-			if(GlobalVars.config_fahrenheit){
-				tmpDouble = CtoF(Convert.ToDouble(temp));
-				tmpString = tmpDouble.ToString("###0.00")+" &deg;F";
-			}
-			else {
-				tmpDouble = Convert.ToDouble(temp);
-				tmpString = tmpDouble.ToString("###0.00")+" &deg;C";
-			}
-			}
-			return tmpString;
-		}
-		
-		public static string getHumFullTextHTML(object hum){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(hum);
-			if (tmpDouble == -99) tmpString = "-";
-			else tmpString = tmpDouble.ToString("###0.0000")+" %";
-			return tmpString;
-		}
-		
-		
-		public static string getHumFullText(object hum){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(hum);
-			if (tmpDouble == -99) tmpString = "-";
-			else tmpString = tmpDouble.ToString("###0.0000")+" %";
-			return tmpString;
-		}
-		
-		
-		public static string getHumFullTextShortHTML(object hum){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(hum);
-			if (tmpDouble == -99) tmpString = "-";
-			else tmpString = tmpDouble.ToString("###0.00")+" %";
-			return tmpString;
-		}
-		
-				
-		public static string getHumFullTextShort(object hum){
-			string tmpString;
-			double tmpDouble;
-			tmpDouble = Convert.ToDouble(hum);
-			if (tmpDouble == -99) tmpString = "-";
-			else tmpString = tmpDouble.ToString("###0.00")+" %";
-			return tmpString;
-		}
-		
-		
-		
-		public static string getTempFullTextShort(object temp){
-			double tmpDouble;
-			string tmpString;
-			tmpDouble = Convert.ToDouble(temp);
-			if (tmpDouble == -99) tmpString = "-";
-			else {			
-			if(GlobalVars.config_fahrenheit){
-				tmpDouble = CtoF(Convert.ToDouble(temp));
-				tmpString = tmpDouble.ToString("###0.00")+" °F";
-			}
-			else {
-				tmpDouble = Convert.ToDouble(temp);
-				tmpString = tmpDouble.ToString("###0.00")+" °C";
-			}
-			}
-			return tmpString;
-		}
+
+
+
+        public static string getTempFullText(object temp)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(temp);
+            if (tmpDouble == -99) tmpString = "-";
+            else
+            {
+                if (GlobalVars.config_fahrenheit)
+                {
+                    tmpDouble = CtoF(Convert.ToDouble(temp));
+                    tmpString = tmpDouble.ToString("###0.0000") + " °F";
+                }
+                else
+                {
+                    tmpDouble = Convert.ToDouble(temp);
+                    tmpString = tmpDouble.ToString("###0.0000") + " °C";
+                }
+            }
+            return tmpString;
+        }
+
+
+        public static string getTempFullTextHTML(object temp)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(temp);
+            if (tmpDouble == -99) tmpString = "-";
+            else
+            {
+                if (GlobalVars.config_fahrenheit)
+                {
+                    tmpDouble = CtoF(Convert.ToDouble(temp));
+                    tmpString = tmpDouble.ToString("###0.0000") + " &deg;F";
+                }
+                else
+                {
+                    tmpDouble = Convert.ToDouble(temp);
+                    tmpString = tmpDouble.ToString("###0.0000") + " &deg;C";
+                }
+            }
+            return tmpString;
+        }
+
+
+        public static string getTempFullTextShortHTML(object temp)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(temp);
+            if (tmpDouble == -99) tmpString = "-";
+            else
+            {
+                if (GlobalVars.config_fahrenheit)
+                {
+                    tmpDouble = CtoF(Convert.ToDouble(temp));
+                    tmpString = tmpDouble.ToString("###0.00") + " &deg;F";
+                }
+                else
+                {
+                    tmpDouble = Convert.ToDouble(temp);
+                    tmpString = tmpDouble.ToString("###0.00") + " &deg;C";
+                }
+            }
+            return tmpString;
+        }
+
+        public static string getHumFullTextHTML(object hum)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(hum);
+            if (tmpDouble == -99) tmpString = "-";
+            else tmpString = tmpDouble.ToString("###0.0000") + " %";
+            return tmpString;
+        }
+
+
+        public static string getHumFullText(object hum)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(hum);
+            if (tmpDouble == -99) tmpString = "-";
+            else tmpString = tmpDouble.ToString("###0.0000") + " %";
+            return tmpString;
+        }
+
+
+        public static string getHumFullTextShortHTML(object hum)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(hum);
+            if (tmpDouble == -99) tmpString = "-";
+            else tmpString = tmpDouble.ToString("###0.00") + " %";
+            return tmpString;
+        }
+
+
+        public static string getHumFullTextShort(object hum)
+        {
+            string tmpString;
+            double tmpDouble;
+            tmpDouble = Convert.ToDouble(hum);
+            if (tmpDouble == -99) tmpString = "-";
+            else tmpString = tmpDouble.ToString("###0.00") + " %";
+            return tmpString;
+        }
+
+
+
+        public static string getTempFullTextShort(object temp)
+        {
+            double tmpDouble;
+            string tmpString;
+            tmpDouble = Convert.ToDouble(temp);
+            if (tmpDouble == -99) tmpString = "-";
+            else
+            {
+                if (GlobalVars.config_fahrenheit)
+                {
+                    tmpDouble = CtoF(Convert.ToDouble(temp));
+                    tmpString = tmpDouble.ToString("###0.00") + " °F";
+                }
+                else
+                {
+                    tmpDouble = Convert.ToDouble(temp);
+                    tmpString = tmpDouble.ToString("###0.00") + " °C";
+                }
+            }
+            return tmpString;
+        }
 
         public static string getTempFullTextShortNC(object temp)
         {
@@ -281,93 +304,95 @@ namespace utac.Components.TEMPer
         public static extern bool EMyWriteTempText(bool flag);
 
         [DllImport("kernel32.dll")]
-		internal static extern Boolean GetCommProperties(IntPtr hFile, out COMMPROP cp);
-		[StructLayout(LayoutKind.Sequential)]
-		internal struct COMMPROP
-		{
-			internal UInt16 wPacketLength;
-			internal UInt16 wPacketVersion;
-			internal UInt32 dwServiceMask;
-			internal UInt32 dwReserved1;
-			internal UInt32 dwMaxTxQueue;
-			internal UInt32 dwMaxRxQueue;
-			internal UInt32 dwMaxBaud;
-			internal UInt32 dwProvSubType;
-			internal UInt32 dwProvCapabilities;
-			internal UInt32 dwSettableParams;
-			internal UInt32 dwSettableBaud;
-			internal UInt16 wSettableData;
-			internal UInt16 wSettableStopParity;
-			internal UInt32 dwCurrentTxQueue;
-			internal UInt32 dwCurrentRxQueue;
-			internal UInt32 dwProvSpec1;
-			internal UInt32 dwProvSpec2;
-			internal Byte wcProvChar;
-		}
+        internal static extern Boolean GetCommProperties(IntPtr hFile, out COMMPROP cp);
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct COMMPROP
+        {
+            internal UInt16 wPacketLength;
+            internal UInt16 wPacketVersion;
+            internal UInt32 dwServiceMask;
+            internal UInt32 dwReserved1;
+            internal UInt32 dwMaxTxQueue;
+            internal UInt32 dwMaxRxQueue;
+            internal UInt32 dwMaxBaud;
+            internal UInt32 dwProvSubType;
+            internal UInt32 dwProvCapabilities;
+            internal UInt32 dwSettableParams;
+            internal UInt32 dwSettableBaud;
+            internal UInt16 wSettableData;
+            internal UInt16 wSettableStopParity;
+            internal UInt32 dwCurrentTxQueue;
+            internal UInt32 dwCurrentRxQueue;
+            internal UInt32 dwProvSpec1;
+            internal UInt32 dwProvSpec2;
+            internal Byte wcProvChar;
+        }
 
-		[DllImport("kernel32.dll", SetLastError = true)]
-		internal static extern IntPtr CreateFile(String lpFileName,
-		                                         UInt32 dwDesiredAccess, UInt32 dwShareMode,
-		                                         IntPtr lpSecurityAttributes, UInt32 dwCreationDisposition,
-		                                         UInt32 dwFlagsAndAttributes, IntPtr hTemplateFile);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr CreateFile(String lpFileName,
+                                                 UInt32 dwDesiredAccess, UInt32 dwShareMode,
+                                                 IntPtr lpSecurityAttributes, UInt32 dwCreationDisposition,
+                                                 UInt32 dwFlagsAndAttributes, IntPtr hTemplateFile);
 
-		[DllImport("kernel32.dll", SetLastError = true)]
-		internal static extern bool CloseHandle(IntPtr hObject);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool CloseHandle(IntPtr hObject);
 
         [DllImport("user32.dll")]
         public static extern int ExitWindowsEx(int uFlags, int dwReason);
 
-		public static bool CheckCOMPort(String COMPort)
-		{
-			try
-			{
-				IntPtr m_Port = CreateFile(COMPort, 0xC0000000u, 3u, IntPtr.Zero, 3u, 0x800u, IntPtr.Zero);
-				if (m_Port.ToInt32() == -1) return false;
+        public static bool CheckCOMPort(String COMPort)
+        {
+            try
+            {
+                IntPtr m_Port = CreateFile(COMPort, 0xC0000000u, 3u, IntPtr.Zero, 3u, 0x800u, IntPtr.Zero);
+                if (m_Port.ToInt32() == -1) return false;
 
-				COMMPROP m_CommProp;
-				m_CommProp.dwProvSpec2 = 0;
-				m_CommProp.wPacketLength = 64;
-				m_CommProp.dwProvSpec1 = 0xE73CF52E;
+                COMMPROP m_CommProp;
+                m_CommProp.dwProvSpec2 = 0;
+                m_CommProp.wPacketLength = 64;
+                m_CommProp.dwProvSpec1 = 0xE73CF52E;
 
-				GetCommProperties(m_Port, out m_CommProp);
+                GetCommProperties(m_Port, out m_CommProp);
 
-				CloseHandle(m_Port);
-				log("COMMPROP:"+m_CommProp.dwProvSpec2);
-				return m_CommProp.dwProvSpec2 == 1128813859 || m_CommProp.dwProvSpec2 == 1128813842;
-												
+                CloseHandle(m_Port);
+                log("COMMPROP:" + m_CommProp.dwProvSpec2);
+                return m_CommProp.dwProvSpec2 == 1128813859 || m_CommProp.dwProvSpec2 == 1128813842;
 
-			}
-			catch (Exception e) {
-				if(GlobalVars.config_log){
-					log(e.Message);
-				}
-			}
 
-			return false;
-		}
-		
-		public static bool CommPortExists(String COMPort)
-		{
-		    foreach (String Port in SerialPort.GetPortNames())
-				if (COMPort == Port) return true;
+            }
+            catch (Exception e)
+            {
+                if (GlobalVars.config_log)
+                {
+                    log(e.Message);
+                }
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-		public static String[] FindDevices(IntPtr hndl)
-		{
-			List<String> found_ports = new List<String>();
+        public static bool CommPortExists(String COMPort)
+        {
+            foreach (String Port in SerialPort.GetPortNames())
+                if (COMPort == Port) return true;
 
-			String[] ports = SerialPort.GetPortNames();
-			if (ports == null) return null;
+            return false;
+        }
 
-		    for (int i = 0; i < ports.Length; i++)
-			{
-			    String PortName = @"\\.\" + ports[i] + "\0";
+        public static String[] FindDevices(IntPtr hndl)
+        {
+            List<String> found_ports = new List<String>();
 
-			    if(CheckCOMPort(PortName))
-					found_ports.Add(ports[i]);
-			}
+            String[] ports = SerialPort.GetPortNames();
+            if (ports == null) return null;
+
+            for (int i = 0; i < ports.Length; i++)
+            {
+                String PortName = @"\\.\" + ports[i] + "\0";
+
+                if (CheckCOMPort(PortName))
+                    found_ports.Add(ports[i]);
+            }
 
             // Find the HID devices
             int devCount = EMyDetectDevice((long)hndl);
@@ -376,17 +401,17 @@ namespace utac.Components.TEMPer
                 found_ports.Add("HID Device " + iDev.ToString());
             }
 
-		    found_ports.Sort();
+            found_ports.Sort();
 
-			return found_ports.ToArray();
-		}
-		
-		private double ReadSHT(string TH)
-		{
-			string str_temp="";
-			int xxx=0;
-			string str_msb = "";
-			string str_lsb = "";
+            return found_ports.ToArray();
+        }
+
+        private double ReadSHT(string TH)
+        {
+            string str_temp = "";
+            int xxx = 0;
+            string str_msb = "";
+            string str_lsb = "";
 
             try
             {
@@ -444,8 +469,8 @@ namespace utac.Components.TEMPer
                     HiLowSCLK();
                 }
                 SDout(1);  // ACK                
-                Sclk(1);                
-                Sclk(0);               
+                Sclk(1);
+                Sclk(0);
                 while ((SDin() == 1) & (xxx < 0x3e8)) // Wait until Input goes to Zero, up to 0x3e8ms
                 {
                     Delay(1);
@@ -543,60 +568,60 @@ namespace utac.Components.TEMPer
                 log("Serial Port Error:" + e.Message);
                 return myMinValue;
             }
-		}
-		
+        }
 
-		
 
-		private void TransStart()
-		{
-			SDout(1);
-			Sclk(0);
-			Sclk(1);
-			SDout(0);
-			Sclk(0);
-			Sclk(1);
-			SDout(1);
-			Sclk(0);
-		}
 
-		private static double Bin2Dec(String strBin)
-		{
-			try
-			{
-				double lDec = 0.0;
-				if (strBin == null || strBin.Length == 0)
-					strBin = "0";
-				double lCount = Strings.Len(strBin);
-				double t_double = lCount;
-				for (double i = 1.0; i <= t_double; i++)
-				{
-					lDec += Convert.ToInt32(Strings.Left(strBin, 1)) * Math.Pow(2.0, Strings.Len(strBin) - 1);
-					strBin = Strings.Right(strBin, Strings.Len(strBin) - 1);
-				}
-				return lDec;
-			}
-			catch (Exception e) { log(e.Message); }
 
-			return myMinValue;
-		}
+        private void TransStart()
+        {
+            SDout(1);
+            Sclk(0);
+            Sclk(1);
+            SDout(0);
+            Sclk(0);
+            Sclk(1);
+            SDout(1);
+            Sclk(0);
+        }
+
+        private static double Bin2Dec(String strBin)
+        {
+            try
+            {
+                double lDec = 0.0;
+                if (strBin == null || strBin.Length == 0)
+                    strBin = "0";
+                double lCount = Strings.Len(strBin);
+                double t_double = lCount;
+                for (double i = 1.0; i <= t_double; i++)
+                {
+                    lDec += Convert.ToInt32(Strings.Left(strBin, 1)) * Math.Pow(2.0, Strings.Len(strBin) - 1);
+                    strBin = Strings.Right(strBin, Strings.Len(strBin) - 1);
+                }
+                return lDec;
+            }
+            catch (Exception e) { log(e.Message); }
+
+            return myMinValue;
+        }
 
         //  Delays are very system dependant.
         //  Also - optimization could be killing a for-loop delay.
         //  Replaced it with thread sleeping as a test.
-		private static void Delay(int x)
-		{
+        private static void Delay(int x)
+        {
             //System.Threading.Thread.Sleep(x/10);
             System.Threading.Thread.Sleep(x * 1);
-			// for (int i=x;i <= 3; i++);
-		}
+            // for (int i=x;i <= 3; i++);
+        }
 
-		#endregion
+        #endregion
 
-		#region Class Methods
+        #region Class Methods
 
-		public TEMPerInterface(String device)
-		{
+        public TEMPerInterface(String device)
+        {
             if (device.IndexOf("HID") < 0)
             {
                 m_PortName = device;
@@ -608,8 +633,8 @@ namespace utac.Components.TEMPer
                 m_SerialPort = null;
                 m_HIDDev = (int)Char.GetNumericValue(device[device.Length - 1]);
             }
-			Init();
-		}
+            Init();
+        }
 
         //  This one is used to add an additional interface to an already existing COMPort.
         public TEMPerInterface(String COMPort, SerialPort ThePort, String NewName)
@@ -637,40 +662,44 @@ namespace utac.Components.TEMPer
             m_Init = true;
             // Init();
         }
-		
-		
-		public static void log(string newLogLine){
-			DateTime dt = DateTime.Now;
-			string currentDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
-			
-			if(GlobalVars.config_log){
-				try {
-					StreamWriter SW;
-					SW=File.AppendText(LogFileName);
-					SW.WriteLine("["+currentDate+"] "+newLogLine);
-					SW.Close();
-				} catch (Exception)
-				{}
-			}
-		}
-		
 
 
-		public void CheckDevice()
-		{
-		    int i = 0;
-			string aa = TEMPerName();	    
-		    while (i <= 20 && aa == "n/a")
-			{
-				aa = TEMPerName();
-				i++;;
-			}
+        public static void log(string newLogLine)
+        {
+            DateTime dt = DateTime.Now;
+            string currentDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (GlobalVars.config_log)
+            {
+                try
+                {
+                    StreamWriter SW;
+                    SW = File.AppendText(LogFileName);
+                    SW.WriteLine("[" + currentDate + "] " + newLogLine);
+                    SW.Close();
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
+
+
+        public void CheckDevice()
+        {
+            int i = 0;
+            string aa = TEMPerName();
+            while (i <= 20 && aa == "n/a")
+            {
+                aa = TEMPerName();
+                i++; ;
+            }
             DeviceName = aa;
             // GlobalVars.TEMPerName = aa;
-		}
-		
-		private void Init()
-		{
+        }
+
+        private void Init()
+        {
             if (m_PortName != null)
             {
                 m_SerialPort = new SerialPort(m_PortName);
@@ -700,16 +729,16 @@ namespace utac.Components.TEMPer
                 CheckDevice();
                 m_Init = true;
             }
-		}
+        }
 
-		public String PortName
-		{
-			get { return m_PortName; }
-		}
-		
-		
-		public string TEMPerName()
-		{
+        public String PortName
+        {
+            get { return m_PortName; }
+        }
+
+
+        public string TEMPerName()
+        {
             if (m_SerialPort != null)
             {
                 byte y88 = (byte)Math.Round(ReadEEPROM(0x58));
@@ -731,62 +760,63 @@ namespace utac.Components.TEMPer
                 log("Found: " + DeviceName + " (chic: " + m_CHic);
             }
 
-			return DeviceName;
-		}
-		
-		public void writeX(byte data)
-		{
-			string data_str = Dec2Bin(data);
-			byte i = 0;
-			do
-			{
-				byte ii = Convert.ToByte(Strings.Right(Strings.Left(data_str, i + 1), 1));
-				SDout(ii);
-				Delay(20);
-				HiLowSCLK();
-				i = (byte) (i + 1);
-			}
-			while (i <= 7);
-		}
-		
-		public string Dec2Bin(double bDec)
-		{
-			string Dec2Bin = "";
-			try
-			{
-				if (bDec > 255.0)
-				{
-					Dec2Bin = "-1";
-				}
-				else
-				{
-					string strBin = "";
-					while (bDec > 0.0)
-					{
-						strBin = (bDec % 2.0) + strBin;
-						bDec = Conversion.Fix(bDec / 2.0);
-					}
-					if (Strings.Len(strBin) < 9)
-					{
-						while (Strings.Len(strBin) < 8)
-						{
-							strBin = "0" + strBin;
-						}
-					}
-					Dec2Bin = strBin;
-				}
-			} catch (Exception)
-			{}
-			return Dec2Bin;
-		}
-		
-		public double ReadEEPROM(byte EEadd)
-		{
-			if (m_SerialPort.IsOpen)
-			{
-				m_SerialPort.Close();
-			}
-			m_SerialPort.Open();
+            return DeviceName;
+        }
+
+        public void writeX(byte data)
+        {
+            string data_str = Dec2Bin(data);
+            byte i = 0;
+            do
+            {
+                byte ii = Convert.ToByte(Strings.Right(Strings.Left(data_str, i + 1), 1));
+                SDout(ii);
+                Delay(20);
+                HiLowSCLK();
+                i = (byte)(i + 1);
+            }
+            while (i <= 7);
+        }
+
+        public string Dec2Bin(double bDec)
+        {
+            string Dec2Bin = "";
+            try
+            {
+                if (bDec > 255.0)
+                {
+                    Dec2Bin = "-1";
+                }
+                else
+                {
+                    string strBin = "";
+                    while (bDec > 0.0)
+                    {
+                        strBin = (bDec % 2.0) + strBin;
+                        bDec = Conversion.Fix(bDec / 2.0);
+                    }
+                    if (Strings.Len(strBin) < 9)
+                    {
+                        while (Strings.Len(strBin) < 8)
+                        {
+                            strBin = "0" + strBin;
+                        }
+                    }
+                    Dec2Bin = strBin;
+                }
+            }
+            catch (Exception)
+            { }
+            return Dec2Bin;
+        }
+
+        public double ReadEEPROM(byte EEadd)
+        {
+            if (m_SerialPort.IsOpen)
+            {
+                m_SerialPort.Close();
+            }
+            m_SerialPort.Open();
 
             if (!m_SerialPort.IsOpen)
             {
@@ -795,65 +825,66 @@ namespace utac.Components.TEMPer
             }
 
 
-			Start_IIC();
-			writeX(160);
-			Delay(100);
-			ReadACK();
-			writeX(EEadd);
-			Delay(100);
-			ReadACK();
-			Start_IIC();
-			writeX(0xa1);
-			Delay(100);
-			ReadACK();
-			string str_data = (SDin().ToString());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			str_data = str_data + (SDin());
-			HiLowSCLK();
-			Stop_IIC();
-			double ReadEEPROM = Bin2Dec(str_data);
-			m_SerialPort.Close();
-			return ReadEEPROM;
-		}
-		
-		public void ReadACK()
-		{
-			byte tt = SDin();
-			HiLowSCLK();
-			if (tt == 1)
-			{
-				if (m_CHic == "T")
-				{
-					m_CHic = "R";;
-				}
-				else
-				{
-					m_CHic = "T";
-				}
-			}
-		}
+            Start_IIC();
+            writeX(160);
+            Delay(100);
+            ReadACK();
+            writeX(EEadd);
+            Delay(100);
+            ReadACK();
+            Start_IIC();
+            writeX(0xa1);
+            Delay(100);
+            ReadACK();
+            string str_data = (SDin().ToString());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            str_data = str_data + (SDin());
+            HiLowSCLK();
+            Stop_IIC();
+            double ReadEEPROM = Bin2Dec(str_data);
+            m_SerialPort.Close();
+            return ReadEEPROM;
+        }
 
-		private double[] ReadTEMPer(){
-			double[] myReturn = {-99, -99};           
-			try
-			{
-				if (m_SerialPort == null)
-					return myReturn;
+        public void ReadACK()
+        {
+            byte tt = SDin();
+            HiLowSCLK();
+            if (tt == 1)
+            {
+                if (m_CHic == "T")
+                {
+                    m_CHic = "R"; ;
+                }
+                else
+                {
+                    m_CHic = "T";
+                }
+            }
+        }
 
-				if (!m_Init)
-					Init();
+        private double[] ReadTEMPer()
+        {
+            double[] myReturn = { -99, -99 };
+            try
+            {
+                if (m_SerialPort == null)
+                    return myReturn;
+
+                if (!m_Init)
+                    Init();
 
                 if (!m_Init)
                 {
@@ -861,8 +892,8 @@ namespace utac.Components.TEMPer
                     return myReturn;
                 }
 
-				if (!m_SerialPort.IsOpen)
-					m_SerialPort.Open();
+                if (!m_SerialPort.IsOpen)
+                    m_SerialPort.Open();
 
                 if (!m_SerialPort.IsOpen)
                 {
@@ -871,40 +902,40 @@ namespace utac.Components.TEMPer
                 }
 
 
-				double ReadTEMP = myMinValue;
-				SDout(1);
-				SDin();
-				SDout(0);
-				SDin();
-				Start_IIC();
-				SDout(1);
-				HiLowSCLK();
-				SDout(0);
-				HiLowSCLK();
-				SDout(0);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-				Sclk(1);
+                double ReadTEMP = myMinValue;
+                SDout(1);
+                SDin();
+                SDout(0);
+                SDin();
+                Start_IIC();
+                SDout(1);
+                HiLowSCLK();
+                SDout(0);
+                HiLowSCLK();
+                SDout(0);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+                Sclk(1);
 
-				byte tt = SDin();
-				HiLowSCLK();
+                byte tt = SDin();
+                HiLowSCLK();
 
-				if (tt == 1)
-				{
-					if (m_CHic == "T")
-						m_CHic = "R";
-					else
-						m_CHic = "T";
-				}
+                if (tt == 1)
+                {
+                    if (m_CHic == "T")
+                        m_CHic = "R";
+                    else
+                        m_CHic = "T";
+                }
                 if (tt == 1)
                 {
                     log("TEMPer ACK Failed.");
@@ -912,110 +943,114 @@ namespace utac.Components.TEMPer
                         m_SerialPort.Close();
                     return myReturn;
                 }
-				
-				string str_data = SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				SDin();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				HiLowSCLK();
-				str_data = str_data + SDin().ToString();
-				Sclk(0);
-				string FuHao = Strings.Left(str_data, 1);
-				string str_temp = Strings.Left(str_data, 12);
-				string str_msb = Strings.Left(str_temp, 4);
-				string str_lsb = Strings.Right(str_temp, 8);
-				double msb = Bin2Dec(str_msb);
-				double lsb = Bin2Dec(str_lsb);
-				double tempdata = (msb * 256.0) + lsb;
-				switch (FuHao)
-				{
-					case "0":
-						ReadTEMP = tempdata * 0.0625;
-						break;
 
-					case "1":
-						ReadTEMP = -(4096.0 - tempdata) * 0.0625;
-						break;
-				}
-				
-				SDout(0);
-				HiLowSCLK();
-				Stop_IIC();
+                string str_data = SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                SDin();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                HiLowSCLK();
+                str_data = str_data + SDin().ToString();
+                Sclk(0);
+                string FuHao = Strings.Left(str_data, 1);
+                string str_temp = Strings.Left(str_data, 12);
+                string str_msb = Strings.Left(str_temp, 4);
+                string str_lsb = Strings.Right(str_temp, 8);
+                double msb = Bin2Dec(str_msb);
+                double lsb = Bin2Dec(str_lsb);
+                double tempdata = (msb * 256.0) + lsb;
+                switch (FuHao)
+                {
+                    case "0":
+                        ReadTEMP = tempdata * 0.0625;
+                        break;
 
-				if (m_SerialPort.IsOpen)
-					m_SerialPort.Close();
-				log("Read TEMPer:" + ReadTEMP.ToString("###0.#####"));
-				myReturn[0] = ReadTEMP+GlobalVars.config_calibration_temp;
-				myReturn[1] = myMinValue;
-				return myReturn;
-			}
-			catch (Exception e) {
-					log(e.Message);				
-			}
+                    case "1":
+                        ReadTEMP = -(4096.0 - tempdata) * 0.0625;
+                        break;
+                }
 
-			m_Init = false;
-			myReturn[0] = myMinValue;
-			myReturn[1] = myMinValue;
+                SDout(0);
+                HiLowSCLK();
+                Stop_IIC();
+
+                if (m_SerialPort.IsOpen)
+                    m_SerialPort.Close();
+                log("Read TEMPer:" + ReadTEMP.ToString("###0.#####"));
+                myReturn[0] = ReadTEMP + GlobalVars.config_calibration_temp;
+                myReturn[1] = myMinValue;
+                return myReturn;
+            }
+            catch (Exception e)
+            {
+                log(e.Message);
+            }
+
+            m_Init = false;
+            myReturn[0] = myMinValue;
+            myReturn[1] = myMinValue;
             if (m_SerialPort.IsOpen)
                 m_SerialPort.Close();
-			return myReturn;
-		}
-		
-		private double[] ReadTEMPerHum(){
-			decimal ReadTEMPsh10 = new decimal((ReadSHT("T") * 0.01) - 40.0);
-			decimal C1 = -4M;
-			decimal C2 = 0.0405M;
-			object C3 = -2.8E-06;
-			decimal T1 = 0.01M;
-			decimal T2 = 0.00008M;
-			Delay(4);
-			int rh = (int) Math.Round(ReadSHT("H"));
-			decimal rh_lin = Conversions.ToDecimal(Operators.AddObject(Operators.AddObject(Operators.MultiplyObject(Operators.MultiplyObject(C3, rh), rh), decimal.Multiply(C2, new decimal(rh))), C1));
-			decimal rh_true = decimal.Add(decimal.Multiply(decimal.Subtract(ReadTEMPsh10, 25M), decimal.Add(T1, decimal.Multiply(T2, new decimal(rh)))), rh_lin);
-			if (decimal.Compare(rh_true, 100M) > 0)	{ rh_true = 100M;}
-			if (Convert.ToDouble(rh_true) < 0.1){ rh_true = 0.1M; }
-			double[] myReturn = {-99, -99};
-			myReturn[0] = Convert.ToDouble(ReadTEMPsh10)+GlobalVars.config_calibration_temp;
-			myReturn[1] = Convert.ToDouble(rh_true)+GlobalVars.config_calibration_humidity;
-			log("TEMP: "+myReturn[0].ToString()+", HUM: "+myReturn[1].ToString());
-			return myReturn;
-	    }
-		
-		public double[] Read()
-		{
-           
-			if(DeviceName == "TEMPerV1" || DeviceName == "TEMPerV2" || DeviceName == "TEMPerNTCINT" ){
-				return ReadTEMPer();
-			}
-			else if(DeviceName == "TEMPerHum"){
-				return ReadTEMPerHum();
+            return myReturn;
+        }
+
+        private double[] ReadTEMPerHum()
+        {
+            decimal ReadTEMPsh10 = new decimal((ReadSHT("T") * 0.01) - 40.0);
+            decimal C1 = -4M;
+            decimal C2 = 0.0405M;
+            object C3 = -2.8E-06;
+            decimal T1 = 0.01M;
+            decimal T2 = 0.00008M;
+            Delay(4);
+            int rh = (int)Math.Round(ReadSHT("H"));
+            decimal rh_lin = Conversions.ToDecimal(Operators.AddObject(Operators.AddObject(Operators.MultiplyObject(Operators.MultiplyObject(C3, rh), rh), decimal.Multiply(C2, new decimal(rh))), C1));
+            decimal rh_true = decimal.Add(decimal.Multiply(decimal.Subtract(ReadTEMPsh10, 25M), decimal.Add(T1, decimal.Multiply(T2, new decimal(rh)))), rh_lin);
+            if (decimal.Compare(rh_true, 100M) > 0) { rh_true = 100M; }
+            if (Convert.ToDouble(rh_true) < 0.1) { rh_true = 0.1M; }
+            double[] myReturn = { -99, -99 };
+            myReturn[0] = Convert.ToDouble(ReadTEMPsh10) + GlobalVars.config_calibration_temp;
+            myReturn[1] = Convert.ToDouble(rh_true) + GlobalVars.config_calibration_humidity;
+            log("TEMP: " + myReturn[0].ToString() + ", HUM: " + myReturn[1].ToString());
+            return myReturn;
+        }
+
+        public double[] Read()
+        {
+
+            if (DeviceName == "TEMPerV1" || DeviceName == "TEMPerV2" || DeviceName == "TEMPerNTCINT")
+            {
+                return ReadTEMPer();
+            }
+            else if (DeviceName == "TEMPerHum")
+            {
+                return ReadTEMPerHum();
             }
             else if (DeviceName == "TEMPerNTC" || DeviceName == "TEMPerNTCV2")
             {
@@ -1029,208 +1064,208 @@ namespace utac.Components.TEMPer
             {
                 return new double[] { -99, -99 };
             }
-		}
+        }
 
-		private void Start_IIC()
-		{		
-			SDout(1);
-			Sclk(1);
-			SDout(0);
-			Sclk(0);
+        private void Start_IIC()
+        {
+            SDout(1);
+            Sclk(1);
+            SDout(0);
+            Sclk(0);
 
-		}
+        }
 
-		private void Stop_IIC()
-		{			
-			SDout(0);
-			Sclk(1);
-			SDout(1);
-		}
+        private void Stop_IIC()
+        {
+            SDout(0);
+            Sclk(1);
+            SDout(1);
+        }
 
-		private void Sclk(byte ad01)
-		{
+        private void Sclk(byte ad01)
+        {
             Delay(1);
-			if (m_CHic == "T")
-			{
-				if (ad01 == 0)
-				{
-					m_SerialPort.DtrEnable = true;
-				}
-				if (ad01 == 1)
-				{
-					m_SerialPort.DtrEnable = false;
-				}
-			}
-			if (m_CHic == "R")
-			{
-				if (ad01 == 0)
-				{
-					m_SerialPort.DtrEnable = false;
-				}
-				if (ad01 == 1)
-				{
-					m_SerialPort.DtrEnable = true;
-				}
-			}
-		}
+            if (m_CHic == "T")
+            {
+                if (ad01 == 0)
+                {
+                    m_SerialPort.DtrEnable = true;
+                }
+                if (ad01 == 1)
+                {
+                    m_SerialPort.DtrEnable = false;
+                }
+            }
+            if (m_CHic == "R")
+            {
+                if (ad01 == 0)
+                {
+                    m_SerialPort.DtrEnable = false;
+                }
+                if (ad01 == 1)
+                {
+                    m_SerialPort.DtrEnable = true;
+                }
+            }
+        }
 
-		private void HiLowSCLK()
-		{
-			Sclk(1);
-			Sclk(0);
-		}
+        private void HiLowSCLK()
+        {
+            Sclk(1);
+            Sclk(0);
+        }
 
-		private byte SDin()
-		{
-			byte SDin = 0;
+        private byte SDin()
+        {
+            byte SDin = 0;
             Delay(1);
-			SDout(1);
-			Delay(50);
-			Delay(50);
-			bool a = m_SerialPort.CtsHolding;
-			if (m_CHic == "T")
-			{
-				if (!a)
-				{
-					SDin = 1;
-				}
-				else
-				{
-					SDin = 0;
-				}
-			}
-			if (m_CHic != "R")
-			{
-				return SDin;
-			}
-			if (!a)
-			{
-				return 0;
-			}
-			return 1;
+            SDout(1);
+            Delay(50);
+            Delay(50);
+            bool a = m_SerialPort.CtsHolding;
+            if (m_CHic == "T")
+            {
+                if (!a)
+                {
+                    SDin = 1;
+                }
+                else
+                {
+                    SDin = 0;
+                }
+            }
+            if (m_CHic != "R")
+            {
+                return SDin;
+            }
+            if (!a)
+            {
+                return 0;
+            }
+            return 1;
 
-		}
+        }
 
-		private void SDout(byte ad01)
-		{
+        private void SDout(byte ad01)
+        {
             Delay(1);
-			if (m_CHic == "T")
-			{
-				if (ad01 == 0)
-					m_SerialPort.RtsEnable = true;
-				if (ad01 == 1)
-					m_SerialPort.RtsEnable = false;
-			}
-			if (m_CHic == "R")
-			{
-				if (ad01 == 0)
-					m_SerialPort.RtsEnable = false;
-				if (ad01 == 1)
-					m_SerialPort.RtsEnable = true;
-			}
-		}
+            if (m_CHic == "T")
+            {
+                if (ad01 == 0)
+                    m_SerialPort.RtsEnable = true;
+                if (ad01 == 1)
+                    m_SerialPort.RtsEnable = false;
+            }
+            if (m_CHic == "R")
+            {
+                if (ad01 == 0)
+                    m_SerialPort.RtsEnable = false;
+                if (ad01 == 1)
+                    m_SerialPort.RtsEnable = true;
+            }
+        }
 
-		private void WriteP1P0(byte P0123, String dataS)
-		{
-		    Start_IIC();
-			SDout(1);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(1);
-			HiLowSCLK();
-			SDout(1);
-			HiLowSCLK();
-			SDout(1);
-			HiLowSCLK();
-			SDout(1);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			Sclk(1);
-			Delay(200);
-			byte tt = SDin();
-			HiLowSCLK();
-			if (tt == 1)
-			{
-				log("err1 ack by p1p0");
-			}
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			if (P0123 == 0)
-			{
-				SDout(0);
-				HiLowSCLK();
-				SDout(0);
-				HiLowSCLK();
-			}
-			if (P0123 == 1)
-			{
-				SDout(0);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-			}
-			if (P0123 == 2)
-			{
-				SDout(1);
-				HiLowSCLK();
-				SDout(0);
-				HiLowSCLK();
-			}
-			if (P0123 == 3)
-			{
-				SDout(1);
-				HiLowSCLK();
-				SDout(1);
-				HiLowSCLK();
-			}
-			Sclk(1);
-			Delay(200);
-			SDin();
-			HiLowSCLK();
-			if (tt == 1)
-			{
-				log("err2 ack by p1p0");
-			}
-		    byte xx = 1;
-			do
-			{
-				if (Strings.Mid(dataS, xx, 1) == "1")
-				{
-					SDout(1);
-				}
-				else
-				{
-					SDout(0);
-				}
-				Delay(10);
-				HiLowSCLK();
-				xx = (byte) (xx + 1);
-			}
-			while (xx <= 8);
-			Sclk(1);
-			Delay(100);
-			Delay(100);
-			SDin();
-			HiLowSCLK();
-			SDout(0);
-			HiLowSCLK();
-			Stop_IIC();
+        private void WriteP1P0(byte P0123, String dataS)
+        {
+            Start_IIC();
+            SDout(1);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(1);
+            HiLowSCLK();
+            SDout(1);
+            HiLowSCLK();
+            SDout(1);
+            HiLowSCLK();
+            SDout(1);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            Sclk(1);
+            Delay(200);
+            byte tt = SDin();
+            HiLowSCLK();
+            if (tt == 1)
+            {
+                log("err1 ack by p1p0");
+            }
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            if (P0123 == 0)
+            {
+                SDout(0);
+                HiLowSCLK();
+                SDout(0);
+                HiLowSCLK();
+            }
+            if (P0123 == 1)
+            {
+                SDout(0);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+            }
+            if (P0123 == 2)
+            {
+                SDout(1);
+                HiLowSCLK();
+                SDout(0);
+                HiLowSCLK();
+            }
+            if (P0123 == 3)
+            {
+                SDout(1);
+                HiLowSCLK();
+                SDout(1);
+                HiLowSCLK();
+            }
+            Sclk(1);
+            Delay(200);
+            SDin();
+            HiLowSCLK();
+            if (tt == 1)
+            {
+                log("err2 ack by p1p0");
+            }
+            byte xx = 1;
+            do
+            {
+                if (Strings.Mid(dataS, xx, 1) == "1")
+                {
+                    SDout(1);
+                }
+                else
+                {
+                    SDout(0);
+                }
+                Delay(10);
+                HiLowSCLK();
+                xx = (byte)(xx + 1);
+            }
+            while (xx <= 8);
+            Sclk(1);
+            Delay(100);
+            Delay(100);
+            SDin();
+            HiLowSCLK();
+            SDout(0);
+            HiLowSCLK();
+            Stop_IIC();
 
-		}
+        }
 
 
         private Double[] ReadTEMPerHID()
@@ -1571,12 +1606,6 @@ namespace utac.Components.TEMPer
                 return myMinValue;
             }
         }
-
- 
-
-
-
-
-		#endregion
-	}
+        #endregion
+    }
 }

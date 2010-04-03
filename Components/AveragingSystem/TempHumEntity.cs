@@ -46,7 +46,7 @@ namespace utac.Components.AveragingSystem
     {
 
         #region Attributes
-        
+
         private double _TempC;
         public double TempC
         {
@@ -83,7 +83,7 @@ namespace utac.Components.AveragingSystem
             Valid = valid;
 
         }
-        
+
     }
 
 }

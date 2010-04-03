@@ -45,27 +45,27 @@ using utac.Components.Mail;
 
 namespace utac.Components.AlertSystem
 {
-	/// <summary>
-	/// Description of AlertForm.
-	/// </summary>
-	public partial class AlertForm : Form
-	{
-		public AlertForm()
-		{
-			InitializeComponent();
-		}
-		
-		void ButtonCloseClick(object sender, EventArgs e)
-		{
-			 Hide();
-		}
+    /// <summary>
+    /// Description of AlertForm.
+    /// </summary>
+    public partial class AlertForm : Form
+    {
+        public AlertForm()
+        {
+            InitializeComponent();
+        }
+
+        void ButtonCloseClick(object sender, EventArgs e)
+        {
+            Hide();
+        }
 
         public bool CheckAll()
         {
             bool k = false;
-            if (GlobalVars.devicecount > 0 )
-                k=CheckMinMax(0, GlobalVars.config_alert_tempmax1, GlobalVars.config_alert_tempmin1, GlobalVars.config_alert_hummax1, 
-                  GlobalVars.config_alert_hummin1, GlobalVars.config_devicename1, GlobalVars.config_alert_tempemail1, 
+            if (GlobalVars.devicecount > 0)
+                k = CheckMinMax(0, GlobalVars.config_alert_tempmax1, GlobalVars.config_alert_tempmin1, GlobalVars.config_alert_hummax1,
+                  GlobalVars.config_alert_hummin1, GlobalVars.config_devicename1, GlobalVars.config_alert_tempemail1,
                   GlobalVars.config_alert_temponscreen1, GlobalVars.config_alert_humemail1, GlobalVars.config_alert_humonscreen1);
             if (GlobalVars.devicecount > 1)
                 k = CheckMinMax(1, GlobalVars.config_alert_tempmax2, GlobalVars.config_alert_tempmin2, GlobalVars.config_alert_hummax2,
@@ -83,34 +83,34 @@ namespace utac.Components.AlertSystem
             return k;
         }
 
-        public bool CheckMinMax( int devno, double tmax, double tmin, double hmax, double hmin , string devname, bool alerttem, bool alerttos, bool alerthem , bool alerthos)
+        public bool CheckMinMax(int devno, double tmax, double tmin, double hmax, double hmin, string devname, bool alerttem, bool alerttos, bool alerthem, bool alerthos)
         {
-            Text = "UTAC :: "+GlobalVars.lang_alertsystem;
-			buttonClose.Text = GlobalVars.lang_close;
-			bool alertTempMax = false;
-			bool alertHumMax = false;
-			bool alertTempMin = false;
-			bool alertHumMin = false;
-			double actTemp = -99;
+            Text = "UTAC :: " + GlobalVars.lang_alertsystem;
+            buttonClose.Text = GlobalVars.lang_close;
+            bool alertTempMax = false;
+            bool alertHumMax = false;
+            bool alertTempMin = false;
+            bool alertHumMin = false;
+            double actTemp = -99;
             double actHum = -99;
 
             string msgText = "";
 
-            if (GlobalVars.currenthum.Length > devno )
+            if (GlobalVars.currenthum.Length > devno)
             {
-				actHum = TEMPerInterface.getHumDouble(GlobalVars.currenthum[devno]);
-				if(hmax <= actHum){ alertHumMax = true; }
-				if(hmin >= actHum){ alertHumMin = true; }
-			}
-            if (GlobalVars.currenttemp.Length > devno )
+                actHum = TEMPerInterface.getHumDouble(GlobalVars.currenthum[devno]);
+                if (hmax <= actHum) { alertHumMax = true; }
+                if (hmin >= actHum) { alertHumMin = true; }
+            }
+            if (GlobalVars.currenttemp.Length > devno)
             {
-				actTemp = TEMPerInterface.getTempDoubleNC(GlobalVars.currenttemp[devno]);
-				if(tmax <= actTemp){ alertTempMax = true; }
-				if(tmin >= actTemp){ alertTempMin = true; }
-			}
+                actTemp = TEMPerInterface.getTempDoubleNC(GlobalVars.currenttemp[devno]);
+                if (tmax <= actTemp) { alertTempMax = true; }
+                if (tmin >= actTemp) { alertTempMin = true; }
+            }
 
-            if ( devname.Length > 2 )
-                msgText += devname+" Reports:\r\n";
+            if (devname.Length > 2)
+                msgText += devname + " Reports:\r\n";
 
             msgText += "As of " + GlobalVars.currentts[devno].ToString() + " Temp = " + TEMPerInterface.getTempFullTextShortNC(actTemp) + " and Humidity = " + TEMPerInterface.getHumFullTextShort(actHum) + ".\r\n";
             if (GlobalVars.config_alert_tempemail1)
@@ -125,21 +125,25 @@ namespace utac.Components.AlertSystem
             }
 
 
-			if(alertTempMax && alerttem){
-						SendMail.Send(GlobalVars.lang_maxtempalarm + " ("
-						              +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-						              +GlobalVars.currentts[devno].ToString()+")",msgText,false);
-			} else if (alertHumMax && alerthem)
+            if (alertTempMax && alerttem)
+            {
+                SendMail.Send(GlobalVars.lang_maxtempalarm + " ("
+                              + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                              + GlobalVars.currentts[devno].ToString() + ")", msgText, false);
+            }
+            else if (alertHumMax && alerthem)
             {
                 SendMail.Send(GlobalVars.lang_maxhumalarm + " ("
                               + TEMPerInterface.getHumFullTextShort(actHum) + " | "
                               + GlobalVars.currentts[devno].ToString() + ")", msgText, false);
-            } else if (alertTempMin && alerttem)
+            }
+            else if (alertTempMin && alerttem)
             {
                 SendMail.Send(GlobalVars.lang_mintempalarm + " ("
                               + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
                               + GlobalVars.currentts[devno].ToString() + ")", msgText, false);
-            } else if (alertHumMin && alerthem)
+            }
+            else if (alertHumMin && alerthem)
             {
                 SendMail.Send(GlobalVars.lang_minhumalarm + " ("
                               + TEMPerInterface.getHumFullTextShort(actHum) + " | "
@@ -147,76 +151,79 @@ namespace utac.Components.AlertSystem
             }
 
 
-			
-			if(((alertTempMax || alertTempMin) && alerttos)
-			   || ((alertHumMax || alertHumMin) && alerthos)){
 
-				listBoxAlert.Items.Clear();
+            if (((alertTempMax || alertTempMin) && alerttos)
+               || ((alertHumMax || alertHumMin) && alerthos))
+            {
 
-				if(alertTempMax && alerttos) {
-					listBoxAlert.Items.Add(GlobalVars.lang_maxtempalarm + " ("
-					                       +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-					                       +GlobalVars.currentts[devno].ToString()+")");
-										
-				}
+                listBoxAlert.Items.Clear();
+
+                if (alertTempMax && alerttos)
+                {
+                    listBoxAlert.Items.Add(GlobalVars.lang_maxtempalarm + " ("
+                                           + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                                           + GlobalVars.currentts[devno].ToString() + ")");
+
+                }
                 if (alertHumMax && alerthos)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_maxhumalarm + " ("
-					                       +TEMPerInterface.getHumFullTextShort(actHum) + " | "
-					                       +GlobalVars.currentts[devno].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_maxhumalarm + " ("
+                                           + TEMPerInterface.getHumFullTextShort(actHum) + " | "
+                                           + GlobalVars.currentts[devno].ToString() + ")");
+                }
                 if (alertTempMin && alerttos)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_mintempalarm + " ("
-					                       +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-					                       +GlobalVars.currentts[devno].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_mintempalarm + " ("
+                                           + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                                           + GlobalVars.currentts[devno].ToString() + ")");
+                }
                 if (alertHumMin && alerthos)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_minhumalarm + " ("
-					                       +TEMPerInterface.getHumFullTextShort(actHum) + " | "
-					                       +GlobalVars.currentts[devno].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_minhumalarm + " ("
+                                           + TEMPerInterface.getHumFullTextShort(actHum) + " | "
+                                           + GlobalVars.currentts[devno].ToString() + ")");
+                }
 
- 				SetBounds((Screen.GetBounds(this).Width/2) - (this.Width/2),
-				          (Screen.GetBounds(this).Height/2) - (this.Height/2),
-				          this.Width, this.Height, BoundsSpecified.Location);
+                SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
+                          (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
+                          this.Width, this.Height, BoundsSpecified.Location);
 
                 this.ShowDialog();
-              
-                return (true);
-				
-			}
-            return (false);
-		}	
 
-		public bool Check(){
-			Text = "UTAC :: "+GlobalVars.lang_alertsystem;
-			buttonClose.Text = GlobalVars.lang_close;
-			bool alertTempMax = false;
-			bool alertHumMax = false;
-			bool alertTempMin = false;
-			bool alertHumMin = false;
-			double actTemp = -99;
+                return (true);
+
+            }
+            return (false);
+        }
+
+        public bool Check()
+        {
+            Text = "UTAC :: " + GlobalVars.lang_alertsystem;
+            buttonClose.Text = GlobalVars.lang_close;
+            bool alertTempMax = false;
+            bool alertHumMax = false;
+            bool alertTempMin = false;
+            bool alertHumMin = false;
+            double actTemp = -99;
             double actHum = -99;
 
             string msgText = "";
 
-            if (GlobalVars.currenthum.Length > 0 )
+            if (GlobalVars.currenthum.Length > 0)
             {
-				actHum = TEMPerInterface.getHumDouble(GlobalVars.currenthum[0]);
-				if(GlobalVars.config_alert_hummax1 <= actHum){ alertHumMax = true; }
-				if(GlobalVars.config_alert_hummin1 >= actHum){ alertHumMin = true; }
-			}
-            if (GlobalVars.currenttemp.Length > 0 )
+                actHum = TEMPerInterface.getHumDouble(GlobalVars.currenthum[0]);
+                if (GlobalVars.config_alert_hummax1 <= actHum) { alertHumMax = true; }
+                if (GlobalVars.config_alert_hummin1 >= actHum) { alertHumMin = true; }
+            }
+            if (GlobalVars.currenttemp.Length > 0)
             {
-				actTemp = TEMPerInterface.getTempDoubleNC(GlobalVars.currenttemp[0]);
-				if(GlobalVars.config_alert_tempmax1 <= actTemp){ alertTempMax = true; }
-				if(GlobalVars.config_alert_tempmin1 >= actTemp){ alertTempMin = true; }
-			}
+                actTemp = TEMPerInterface.getTempDoubleNC(GlobalVars.currenttemp[0]);
+                if (GlobalVars.config_alert_tempmax1 <= actTemp) { alertTempMax = true; }
+                if (GlobalVars.config_alert_tempmin1 >= actTemp) { alertTempMin = true; }
+            }
 
-            if ( GlobalVars.config_devicename1.Length > 2 )
-                msgText += GlobalVars.config_devicename1+" Reports:\r\n";
+            if (GlobalVars.config_devicename1.Length > 2)
+                msgText += GlobalVars.config_devicename1 + " Reports:\r\n";
 
             msgText += "As of " + GlobalVars.currentts[0].ToString() + " Temp = " + TEMPerInterface.getTempFullTextShortNC(actTemp) + " and Humidity = " + TEMPerInterface.getHumFullTextShort(actHum) + ".\r\n";
             if (GlobalVars.config_alert_tempemail1)
@@ -231,21 +238,25 @@ namespace utac.Components.AlertSystem
             }
 
 
-			if(alertTempMax && GlobalVars.config_alert_tempemail1){
-						SendMail.Send(GlobalVars.lang_maxtempalarm + " ("
-						              +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-						              +GlobalVars.currentts[0].ToString()+")",msgText,false);
-			} else if (alertHumMax && GlobalVars.config_alert_humemail1)
+            if (alertTempMax && GlobalVars.config_alert_tempemail1)
+            {
+                SendMail.Send(GlobalVars.lang_maxtempalarm + " ("
+                              + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                              + GlobalVars.currentts[0].ToString() + ")", msgText, false);
+            }
+            else if (alertHumMax && GlobalVars.config_alert_humemail1)
             {
                 SendMail.Send(GlobalVars.lang_maxhumalarm + " ("
                               + TEMPerInterface.getHumFullTextShort(actHum) + " | "
                               + GlobalVars.currentts[0].ToString() + ")", msgText, false);
-            } else if (alertTempMin && GlobalVars.config_alert_tempemail1)
+            }
+            else if (alertTempMin && GlobalVars.config_alert_tempemail1)
             {
                 SendMail.Send(GlobalVars.lang_mintempalarm + " ("
                               + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
                               + GlobalVars.currentts[0].ToString() + ")", msgText, false);
-            } else if (alertHumMin && GlobalVars.config_alert_humemail1)
+            }
+            else if (alertHumMin && GlobalVars.config_alert_humemail1)
             {
                 SendMail.Send(GlobalVars.lang_minhumalarm + " ("
                               + TEMPerInterface.getHumFullTextShort(actHum) + " | "
@@ -253,47 +264,49 @@ namespace utac.Components.AlertSystem
             }
 
 
-			
-			if(((alertTempMax || alertTempMin) && GlobalVars.config_alert_temponscreen1)
-			   || ((alertHumMax || alertHumMin) && GlobalVars.config_alert_humonscreen1)){
 
-				listBoxAlert.Items.Clear();
+            if (((alertTempMax || alertTempMin) && GlobalVars.config_alert_temponscreen1)
+               || ((alertHumMax || alertHumMin) && GlobalVars.config_alert_humonscreen1))
+            {
 
-				if(alertTempMax && GlobalVars.config_alert_temponscreen1) {
-					listBoxAlert.Items.Add(GlobalVars.lang_maxtempalarm + " ("
-					                       +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-					                       +GlobalVars.currentts[0].ToString()+")");
-										
-				}
+                listBoxAlert.Items.Clear();
+
+                if (alertTempMax && GlobalVars.config_alert_temponscreen1)
+                {
+                    listBoxAlert.Items.Add(GlobalVars.lang_maxtempalarm + " ("
+                                           + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                                           + GlobalVars.currentts[0].ToString() + ")");
+
+                }
                 if (alertHumMax && GlobalVars.config_alert_humonscreen1)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_maxhumalarm + " ("
-					                       +TEMPerInterface.getHumFullTextShort(actHum) + " | "
-					                       +GlobalVars.currentts[0].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_maxhumalarm + " ("
+                                           + TEMPerInterface.getHumFullTextShort(actHum) + " | "
+                                           + GlobalVars.currentts[0].ToString() + ")");
+                }
                 if (alertTempMin && GlobalVars.config_alert_temponscreen1)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_mintempalarm + " ("
-					                       +TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
-					                       +GlobalVars.currentts[0].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_mintempalarm + " ("
+                                           + TEMPerInterface.getTempFullTextShortNC(actTemp) + " | "
+                                           + GlobalVars.currentts[0].ToString() + ")");
+                }
                 if (alertHumMin && GlobalVars.config_alert_humonscreen1)
                 {
-					listBoxAlert.Items.Add(GlobalVars.lang_minhumalarm + " ("
-					                       +TEMPerInterface.getHumFullTextShort(actHum) + " | "
-					                       +GlobalVars.currentts[0].ToString()+")");
-				}
+                    listBoxAlert.Items.Add(GlobalVars.lang_minhumalarm + " ("
+                                           + TEMPerInterface.getHumFullTextShort(actHum) + " | "
+                                           + GlobalVars.currentts[0].ToString() + ")");
+                }
 
- 				SetBounds((Screen.GetBounds(this).Width/2) - (this.Width/2),
-				          (Screen.GetBounds(this).Height/2) - (this.Height/2),
-				          this.Width, this.Height, BoundsSpecified.Location);
+                SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
+                          (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
+                          this.Width, this.Height, BoundsSpecified.Location);
 
                 this.ShowDialog();
-              
+
                 return (true);
-				
-			}
+
+            }
             return (false);
-		}	
-	}
+        }
+    }
 }

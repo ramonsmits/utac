@@ -43,45 +43,48 @@ using System.Windows.Forms;
 
 namespace utac.Components.Mail
 {
-	/// <summary>
-	/// Sendmail Class
-	/// </summary>
-	public class SendMail
-	{
-		/// <summary>
-		/// Simple E-Mail Function, you just need Subject and Message
-		/// the rest is taken from the GlobalVars
-		/// </summary>
-		/// <param name="subject">Subject for the Mail</param>
-		/// <param name="message">Body Message for the Mail</param>
-		public static void Send(string subject, string message, bool showDebug)
-		{
-			bool mailError = false;
-			try{
-				MailMessage msg = new MailMessage();
-				msg.EmailFrom = GlobalVars.config_mail_from;
-				msg.AddEmailTo(GlobalVars.config_mail_to);
-				msg.EmailMessageType = MessageType.Text;
-				msg.EmailMessage = message;
-				msg.EmailSubject = subject;
-				Smtp smtp = new Smtp();
-
-                
+    /// <summary>
+    /// Sendmail Class
+    /// </summary>
+    public class SendMail
+    {
+        /// <summary>
+        /// Simple E-Mail Function, you just need Subject and Message
+        /// the rest is taken from the GlobalVars
+        /// </summary>
+        /// <param name="subject">Subject for the Mail</param>
+        /// <param name="message">Body Message for the Mail</param>
+        public static void Send(string subject, string message, bool showDebug)
+        {
+            bool mailError = false;
+            try
+            {
+                MailMessage msg = new MailMessage();
+                msg.EmailFrom = GlobalVars.config_mail_from;
+                msg.AddEmailTo(GlobalVars.config_mail_to);
+                msg.EmailMessageType = MessageType.Text;
+                msg.EmailMessage = message;
+                msg.EmailSubject = subject;
+                Smtp smtp = new Smtp();
 
                 smtp.SmtpPort = System.Convert.ToInt16(GlobalVars.config_mail_server_port);
-				smtp.SmtpServer = GlobalVars.config_mail_server;
-				smtp.SmtpUser = GlobalVars.config_mail_user;
-				smtp.SmtpPassword = GlobalVars.config_mail_password;
-				smtp.SendEmail(msg);
-			} catch (SmtpException e) {
-				if (showDebug) {
-					mailError = true;
-					MessageBox.Show(e.ToString());
-				}
-			}
-			if (showDebug && !mailError) {
-				MessageBox.Show(GlobalVars.lang_mailsuccessfullysent);
-			}
-		}
-	}
+                smtp.SmtpServer = GlobalVars.config_mail_server;
+                smtp.SmtpUser = GlobalVars.config_mail_user;
+                smtp.SmtpPassword = GlobalVars.config_mail_password;
+                smtp.SendEmail(msg);
+            }
+            catch (SmtpException e)
+            {
+                if (showDebug)
+                {
+                    mailError = true;
+                    MessageBox.Show(e.ToString());
+                }
+            }
+            if (showDebug && !mailError)
+            {
+                MessageBox.Show(GlobalVars.lang_mailsuccessfullysent);
+            }
+        }
+    }
 }

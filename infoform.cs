@@ -42,47 +42,47 @@ using utac.Components.Settings;
 
 namespace utac
 {
-	/// <summary>
-	/// Description of infoform.
-	/// </summary>
-	public partial class infoform : Form
-	{
-		public infoform()
-		{
-			InitializeComponent();
-			this.Text = "UTAC :: "+GlobalVars.lang_programinfos;
-			label_version.Text = GlobalVars._UTACVERSION;
-			label_date.Text = GlobalVars._UTACDATE;
-			labelVersion.Text = GlobalVars.lang_version+":";
-			labelDate.Text = GlobalVars.lang_date+":";
-			groupBoxProgramInfo.Text = GlobalVars.lang_programinfos;	
-			groupBoxAbout.Text = GlobalVars.lang_about;
-		}
-		
-		
-		void Button1Click(object sender, EventArgs e)
-		{
-			Close();
-		}
+    /// <summary>
+    /// Description of infoform.
+    /// </summary>
+    public partial class infoform : Form
+    {
+        public infoform()
+        {
+            InitializeComponent();
+            this.Text = "UTAC :: " + GlobalVars.lang_programinfos;
+            label_version.Text = GlobalVars._UTACVERSION;
+            label_date.Text = GlobalVars._UTACDATE;
+            labelVersion.Text = GlobalVars.lang_version + ":";
+            labelDate.Text = GlobalVars.lang_date + ":";
+            groupBoxProgramInfo.Text = GlobalVars.lang_programinfos;
+            groupBoxAbout.Text = GlobalVars.lang_about;
+        }
 
-	    void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://www.n4rf.net");
-		}
 
-	    void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("mailto:info@n4rf.de");
-		}
+        void Button1Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.n4rf.net");
+        }
+
+        void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("mailto:info@n4rf.de");
+        }
 
         void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://blog.n4rf.net/solutions/utac");
-		}
+        {
+            System.Diagnostics.Process.Start("http://blog.n4rf.net/solutions/utac");
+        }
 
         void PictureBox2Click(object sender, EventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://www.n4rf.net");
-		}
-	}
+        {
+            System.Diagnostics.Process.Start("http://www.n4rf.net");
+        }
+    }
 }
