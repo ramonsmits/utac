@@ -255,6 +255,13 @@ namespace utac
 		}
 		
 		void displaymaxmin(){
+            
+            if (InvokeRequired)
+            {
+
+                BeginInvoke(new ThreadStart(displaymaxmin) );
+            }
+
  			if(ti[dd].tmax != -999){
 			    labelMaxTempVal.Text = TEMPerInterface.getTempFullTextShort(ti[dd].tmax) + " - "+ti[dd].tmax_date;
 			} else { labelMaxTempVal.Text = ""; }
