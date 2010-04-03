@@ -49,7 +49,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("utac")]
 [assembly: AssemblyDescription("USB TEMPer Advanced Control")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("http://github.com/ramonsmits/utac")]
 [assembly: AssemblyProduct("utac")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
