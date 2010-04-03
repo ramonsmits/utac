@@ -39,6 +39,8 @@
  */
 
 using System.Windows.Forms;
+using System;
+using System.IO;
 
 namespace utac.Components.Settings
 {
@@ -46,7 +48,7 @@ namespace utac.Components.Settings
     {
         //  Had to add path to settings to get the settings file to load properly when
         //  program is autoloaded on reboot.
-        readonly string defaultconfigFilename = Application.StartupPath + "\\utacsettings.xml";
+        readonly string defaultconfigFilename = Path.Combine(Application.UserAppDataPath, "utacsettings.xml");
 
         /// <summary>
         /// Add/Remove registry entries for windows startup.
