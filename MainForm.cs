@@ -1261,7 +1261,7 @@ namespace utac
 
 
             // AvgEngine = new TempHumAvgEngine();
-            Text = "UTAC :: " + GlobalVars._UTACVERSION;
+
             if (GlobalVars.config_startminimized)
             {
                 WindowState = FormWindowState.Minimized;
