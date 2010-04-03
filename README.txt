@@ -9,6 +9,10 @@ More information can be found at Albert Huntington his UTAC page:
 
   http://www.alsgh.com/utac/
 
+
+Branch main developer is Ramon Smits (http://ramonsmits.com).
+
+
 == Branch source ==
 
 The original developers is Björn Böttcher and continued by Albert Huntington from which this project is based on. The first commit was based on Albert Huntington v0.1.2o.
